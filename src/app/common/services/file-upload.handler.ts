@@ -23,9 +23,7 @@ uploadFile(image, quillInstanse){
 
     if (image) {
       const storageRef = this.firebaseFcadeService.getFirestoreReference.ref('/journal_images');
-      //3.
       const imageRef = storageRef.child(image.name);
-      //4.
       imageRef.put(image)
      //5.
      .then((dataF: any) => {

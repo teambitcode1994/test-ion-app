@@ -1,3 +1,25 @@
-# These are supported funding model platforms
+name: Build Angular App and Deploy on Firebase
+on:
+  push:
+    branches:
+      - master
 
-patreon: codecrafts
+jobs:
+  build:
+    name: Build & Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@master
+      - name: Install Dependencies
+        run: npm install
+      - name: Build
+        run: npm run build
+      # - name: Run Tests
+      #   run: npm run test
+      - name: Deploy to Firebase
+        uses: w9jds/firebase-action@v1.5.0
+        with:
+          args: deploy --only hosting
+        env:
+          FIREBASE_TOKEN: 1//0gbEh7a1mH3pKCgYIARAAGBASNwF-L9IrK4swvuNx7sWnVcx1Zkd8g45Yf_HByPeCGbZmIMYO-H50Z1wTdQNFH-4aXvS_8IJDQOc
