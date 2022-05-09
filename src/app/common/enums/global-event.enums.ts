@@ -1,0 +1,6 @@
+export enum GlobalUiEvent{
+    MAIN_MENUE_VISIBILITY,
+    MODAL_CLOSE,
+    POPOVER_CLOSE,
+    FILE_UPLOAD
+}

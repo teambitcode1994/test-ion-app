@@ -1,0 +1,104 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button>
+        <img src="../../assets/menu_bar.svg" />
+      </ion-menu-button>
+    </ion-buttons>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-button fill="clear" routerLink="/item-details">
+            <ion-icon name="add-circle-outline" size="large"></ion-icon>
+            
+          </ion-button>
+        </ion-col>
+        <ion-col>
+        </ion-col>
+        <ion-col>
+        
+        </ion-col>
+      </ion-row>
+      </ion-grid>
+    
+    <ion-buttons slot="end">
+      <ion-button class="notification">
+        <ion-icon name="notifications-outline" color="dark"></ion-icon>
+        <span>&nbsp;</span>
+      </ion-button>
+      <ion-button class="filter">
+        <ion-icon name="funnel-outline" color="dark"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="search ion-padding">
+    <ion-item lines="none" *ngIf="isResultView">
+      <ion-input placeholder="Search Your Product" (click)="onSearch()"></ion-input>
+      <ion-icon name="search-outline" slot="start"></ion-icon>
+    </ion-item>
+  </div>
+
+  <!-- <div class="title ion-padding"> -->
+    <ion-title class="ion-no-padding-top">
+    <ion-button shape="round"  fill="outline" size="small" (click)="presentPopover($event)">
+      <ion-icon name="ellipsis-vertical-outline"></ion-icon>
+    </ion-button>
+  </ion-title>
+  <!-- </div> -->
+  <ng-container *ngIf="isResultView">
+    <result-card [resultList]="todoList"></result-card>
+    <!-- <ion-card *ngFor="let item of todoList; let i = index" class="ion-margin">
+      <ion-card-header>
+        
+        <ion-card-subtitle [style.color]="item.itemPriority === 'high' ? 'red' : (item.itemPriority === 'low' ? 'green' : 'orange')">
+          {{item.itemCategory}}
+        </ion-card-subtitle>
+  
+        <ion-item>
+          <ion-icon *ngIf="item.itemPriority === 'high'" color="danger" size="small" name="ellipse"></ion-icon>
+          <ion-icon *ngIf="item.itemPriority === 'low'" color="success" size="small" name="ellipse"></ion-icon>
+          <ion-icon *ngIf="item.itemPriority === 'middle'" color="warning" size="small" name="ellipse"></ion-icon>
+          <ion-label> {{ item.itemName}}</ion-label>
+        </ion-item>
+  
+      </ion-card-header>
+  
+      <ion-card-content>
+        <ion-label>Due {{item.itemDueDate | date:'fullDate'}}</ion-label>
+      </ion-card-content>
+  
+      <ion-row>
+      
+  
+        <ion-item button >
+          <ion-icon name="create-outline"></ion-icon>
+          <p>Update</p>
+        </ion-item>
+  
+        <ion-item button >
+          <ion-icon name="trash-outline"></ion-icon>
+          <p>Cancel</p>
+        </ion-item>
+      </ion-row>
+  
+    </ion-card> -->
+  </ng-container>
+
+  <ng-container *ngIf="!isResultView">
+    <full-page-calender></full-page-calender>
+    <ion-title>&nbsp;</ion-title>
+    <result-card [resultList]="[todoList[0]]"></result-card>
+  </ng-container>
+</ion-content>
+
+  <ion-content *ngIf="isSearchView">
+    <ion-item-group *ngFor="let group of todoList | groupBy: 'date'">
+      <ion-item-divider color="light">
+          {{ group.itemDueDate }}
+      </ion-item-divider>
+      <ion-item *ngFor="let event of group.list">{{ event.itemName }}</ion-item>
+  </ion-item-group>
+</ion-content>

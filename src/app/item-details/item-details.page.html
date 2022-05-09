@@ -1,0 +1,93 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button color="primary" class="backbtn" routerLink="/home" routerDirection="back">
+        <img src="../../assets/back-dark.svg" />
+      </ion-button>
+    </ion-buttons>
+
+    <ion-buttons slot="end">
+      <ion-button>
+        <ion-icon name="search-outline" color="dark"></ion-icon>
+      </ion-button>
+      <ion-button class="notification">
+        <ion-icon name="notifications-outline" color="dark"></ion-icon>
+        <span>&nbsp;</span>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+
+  <div class="ion-padding-vertical">
+    <h1 class="item-name">Black turtleneck top</h1>
+  </div>
+
+
+  <div class="seperator">
+    <hr>
+  </div>
+
+  <div class="variation">
+    <ion-segment (ionChange)="segmentChanged($event)" value="size">
+      <ion-segment-button value="size">
+        <ion-label>Editor</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="color">
+        <ion-label>Preview</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </div>
+
+  <div class="seperator">
+    <hr>
+  </div>
+
+  <div class="variation-selector">
+      <ion-card *ngIf="isEdit">
+        <ion-card-header>
+          <ion-card-title></ion-card-title>
+        </ion-card-header>
+      
+        <ion-card-content>
+          <form [formGroup]="editorForm" (ngSubmit)="onSubmit()">
+            <quill-editor 
+            (onContentChanged)="changeContent($event)" 
+            (onFilesChanged)="onFilesChanged($event)"
+            (onEditorCreated)="onEditorCreated($event)"
+            formControlName="editor" [modules]="modules">
+
+            </quill-editor>
+          </form>
+        </ion-card-content>
+      </ion-card>
+
+      <ng-container *ngIf="!isEdit">
+        <preview-data [contentData]="contentData"></preview-data>
+      </ng-container>
+      <!-- <ion-card *ngIf="!isEdit">
+        <ion-card-header>
+          <ion-card-title></ion-card-title>
+        </ion-card-header>
+      
+        <ion-card-content >
+          <ion-img *ngIf="!contentData" class="test-image" [src]="'https://i.mydramalist.com/wmO7Nf.jpg'"></ion-img>
+        </ion-card-content>
+        <ion-card-content *ngIf="contentData"  [innerHTML]="contentData">
+
+        </ion-card-content>
+      </ion-card> -->
+  </div>
+</ion-content>
+<ion-footer>
+  <ion-row>
+    <ion-col size="6">
+      <ion-button expand="full" color="light">Cancel</ion-button>
+    </ion-col>
+    <ion-col size="6">
+      <ion-button (click)="save()" expand="full">Submit</ion-button>
+    </ion-col>
+  </ion-row>
+</ion-footer>
