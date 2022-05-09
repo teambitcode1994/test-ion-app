@@ -18,8 +18,8 @@ jobs:
       # - name: Run Tests
       #   run: npm run test
       - name: Deploy to Firebase
-        uses: w9jds/firebase-action@v1.5.0
+        uses: w9jds/firebase-action@master
         with:
           args: deploy --only hosting
         env:
-          FIREBASE_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+          FIREBASE_TOKEN: '${{ secrets.FIREBASE_GITHUB_TOKEN }}'
