@@ -1,12 +1,12 @@
-cache:
-    paths:
-        - node_modules/
-
 name: Build Angular App and Deploy on Firebase
 on:
   push:
     branches:
       - master
+
+cache:
+    paths:
+        - node_modules/
 
 jobs:
   build:
