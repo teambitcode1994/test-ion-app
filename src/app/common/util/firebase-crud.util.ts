@@ -7,6 +7,7 @@ export class FirebaseCrudUtil{
 
     public static send<T>(requestData: ApiRequestDataModel<T>, connection:AngularFirestore): Promise<any>{
         let firestoreConnection: Promise<any> = null;
+        delete requestData.payload['firebaseAuthService'];
         const payload = JSON.parse(JSON.stringify(requestData.payload));
         switch (requestData.method) {
             case RequestMethodEnum.GET:
