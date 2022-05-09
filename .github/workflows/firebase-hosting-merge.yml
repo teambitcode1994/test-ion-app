@@ -1,3 +1,10 @@
+stages:
+    - build
+
+cache:
+    paths:
+        - node_modules/
+
 name: Build Angular App and Deploy on Firebase
 on:
   push:
@@ -6,7 +13,7 @@ on:
 
 jobs:
   build:
-    name: Build
+    name: Build & Deploy
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
@@ -15,26 +22,11 @@ jobs:
         run: npm install
       - name: Build
         run: npm run build
-      - name: Archive Production Artifact
-        uses: actions/upload-artifact@master
-        with:
-          name: dist
-          path: dist
-  deploy:
-    name: Deploy
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Repo
-        uses: actions/checkout@master
-      - name: Download Artifact
-        uses: actions/download-artifact@master
-        with:
-          name: dist
-          path: dist
+      # - name: Run Tests
+      #   run: npm run test
       - name: Deploy to Firebase
         uses: w9jds/firebase-action@master
         with:
-          args: deploy --only hosting:staging
+          args: deploy --only hosting --token '${{ secrets.FIREBASE_GITHUB_TOKEN }}'
         env:
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_GITHUB_TOKEN }}
+          FIREBASE_TOKEN: '${{ secrets.FIREBASE_GITHUB_TOKEN }}'
